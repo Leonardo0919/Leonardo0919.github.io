@@ -93,8 +93,8 @@
 <body>
     <div id="searchBox" style="height: 300px;width: 1000px;background-image: url('static/img/back.svg');margin-top:0px;padding-top: 0;">
         <h1 style="text-align: center;">Stock Search</h1>
-        <form id="searchForm" style="margin-left:200px" action= "#"  method="POST">
-            <input type="submit" value="" id="searchButton"  style="background-image: url('static/img/search-solid.svg');background-size: cover;width:40px;height:40px;" />
+        <form id="searchForm" style="margin-left:200px" >
+            <input type="button" value="" id="searchButton"  style="background-image: url('static/img/search-solid.svg');background-size: cover;width:40px;height:40px;" />
             <input type="text" name="symbol" id="content" placeholder="Enter Stock Symbol" style="width: 500px;height:40px;margin: 0px;" required> 
             <input type="button" id="clearButton" style="background-image: url('static/img/times-solid.svg');background-size: cover;width:40px;height: 40px;" />
         </form>
@@ -267,22 +267,16 @@
         })
 
     
-        document.getElementById('searchForm').onsubmit = async function(e){
-            e.preventDefault()
+        document.getElementById('searchButton').onclick = async function(e){
+            // e.preventDefault()
             document.getElementById("error").style.display = "none"
             document.getElementById("result").style.display = "none"
             currentTab.classList.remove("selected")
             document.getElementById("companyTab").classList.add("selected")
             currentTab = document.getElementById("companyTab")
-            const response = await fetch('GetFormData',{
-                method:'POST',
-                headers:{
-                    'Content-Type': 'application/json'                     
-                },
-                body:JSON.stringify({
-                symbol:document.getElementById('content').value
-                })
-            }).then(res =>{
+            symbol = document.getElementById('content').value
+            link = "https://cleonardolouassignment2-564738.wl.r.appspot.com/GetFormData/" + symbol
+            fetch(link).then(res =>{
                 return res.json()
             }).then(data=>{
                 if(data.found == 0){
